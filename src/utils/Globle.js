@@ -63,3 +63,16 @@ export function getVisibleBookMarkObj(self) {
         self.hiddenBookMarkIndex.push(self.searchResult.indexOf(resArrElement));
     }
 }
+
+/**
+ * @description 拿到某个值在数组中的序号
+ * @param {Array} arr
+ * @param {String} val
+ */
+export function getIndexValue(arr, val ) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === val) {
+            return i;
+        }
+    }
+}

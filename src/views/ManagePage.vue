@@ -236,7 +236,7 @@ export default {
   height: 100%;
   box-shadow: rgba(167,167,167,48%) -1px -1px 10px;
   background-color: white;
-  padding: 12px;
+  padding-top: 12px;
   border-radius: 14px;
 }
 

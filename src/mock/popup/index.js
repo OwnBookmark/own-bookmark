@@ -57,9 +57,10 @@ export let searchResult = [
 
 export let tagsArr = [
     'Docker', 'C++', 'Java', 'JavaScript',
-    '数据结构', '算法', 'Shell', '教程', '仓库',
+    '数据结构', 'chrome', 'Shell', 'html', '仓库',
     'TypeScript', 'Webpack', 'React', 'Vue', 'jest',
-    '测试', '知乎', '掘金'
+    'css', '知乎', '掘金', 'dev', 'js', 'baidu', 'google',
+    'github', 'api', 'juejin', 'oschina'
 ]
 
 const tags = [

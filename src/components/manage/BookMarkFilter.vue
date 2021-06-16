@@ -107,6 +107,7 @@ export default {
     width: 100%;
     height: 100%;
     border: none;
+    outline: medium;
     background-color: transparent;
   }
 }

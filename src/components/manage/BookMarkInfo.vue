@@ -1,33 +1,68 @@
 <template>
-  <div class="bookmark-info">
-    <div class="favicon">
-      <img :src="searchResultObj.icon" alt="item-icon"
-           :onerror="errorImg"
-      >
-    </div>
-    <div class="content">
-      <h1>
-        <a :href="searchResultObj.href">{{ searchResultObj.title }}</a>
-      </h1>
-      <p>{{ searchResultObj.href }}</p>
-      <div class="tag-box-inner">
-        <div class="tag" v-for="(tag,index) in searchResultObj.tags" :key="index + '-only'">{{ tag }}</div>
+  <v-card
+      class="mx-auto bookmark-info-outer"
+  >
+    <div class="bookmark-info">
+      <div class="favicon">
+        <img :src="searchResultObj.icon" alt="item-icon"
+             :onerror="errorImg"
+             @click="changeIcon"
+        >
+      </div>
+      <div class="content">
+        <h1>
+          <a :href="searchResultObj.href">{{ searchResultObj.title }}</a>
+        </h1>
+        <p>{{ searchResultObj.href }}</p>
+        <div class="tag-box-inner">
+          <div class="tag" v-for="(tag,index) in searchResultObj.tags" :key="index + '-only'">{{ tag }}</div>
+        </div>
+      </div>
+      <div class="operation-btn">
+        <button @click="handleToggleEdit">
+          <img src="@/assets/edit.svg" alt="edit-btn" id="edit-btn">
+        </button>
+        <button @click="deleteBookMarkItem">
+          <img src="@/assets/remove.svg" alt="remove-btn" id="remove-btn">
+        </button>
       </div>
     </div>
-    <div class="operation-btn">
-      <button @click="handleToggleEdit">
-        <img src="@/assets/edit.svg" alt="edit-btn" id="edit-btn">
-      </button>
-      <button @click="deleteBookMarkItem">
-        <img src="@/assets/remove.svg" alt="remove-btn" id="remove-btn">
-      </button>
-    </div>
-  </div>
+
+    <v-card-actions>
+      <v-btn
+          color="orange lighten-2"
+          text
+      >
+        Explore
+      </v-btn>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+          icon
+          @click="show = !show"
+      >
+        <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+      </v-btn>
+    </v-card-actions>
+
+    <v-expand-transition>
+      <div v-show="show">
+        <!--<v-divider></v-divider>-->
+
+        <TagBoxNew :searchResultObj="searchResultObj"/>
+
+      </div>
+    </v-expand-transition>
+  </v-card>
 </template>
 
 <script>
+import TagBoxNew from "./TagBoxNew";
+
 export default {
   name: "BookMarkInfo",
+  components: {TagBoxNew},
   mounted() {
   },
   props: {
@@ -64,6 +99,7 @@ export default {
   },
   data() {
     return {
+      show: false,
       // 编辑模态框是否弹出
       editable: false,
       // fuseJs 模糊搜索结果数组
@@ -87,12 +123,17 @@ export default {
      * 如果当前输入内容为空则在所有书签列表上进行删除
      */
     deleteBookMarkItem() {
-      console.log(this.currId)
       this.$emit("deleteBKIndex", this.currId);
       if (this.searchInputVal !== "") {
         this.$emit('darkSearch');
       }
     },
+    /**
+     * @description 用于更换自定义网站图标
+     */
+    changeIcon() {
+      console.log()
+    }
   },
   computed: {}
 }
@@ -129,76 +170,82 @@ export default {
   }
 }
 
-.bookmark-info {
-  display: flex;
-  position: relative;
-  margin-bottom: 10px;
-  padding: 15px 25px;
-  border-radius: 10px;
-  transition: all .3s;
+.bookmark-info-outer {
+  margin-bottom: 16px;
+  padding: 0;
+  //border-radius: 14px;
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
+  .bookmark-info {
+    display: flex;
+    position: relative;
+    margin-bottom: 10px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    transition: all .3s;
 
-  .content {
-    width: 75%;
-    margin-left: 10px;
+    //&:hover {
+    //  background-color: rgba(0, 0, 0, 0.1);
+    //}
 
-    h1 {
-      font-size: 25px;
-      transition: all .5s;
+    .content {
+      width: 75%;
+      margin-left: 10px;
 
-      a {
-        word-wrap: anywhere;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+      h1 {
+        font-size: 25px;
+        transition: all .5s;
+
+        a {
+          word-wrap: anywhere;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .tag-box-inner {
+        margin-top: 10px;
       }
     }
 
-    p {
-      font-size: 16px;
-    }
-
-    .tag-box-inner {
-      margin-top: 10px;
-    }
-  }
-
-  .favicon {
-    width: 35px;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  .operation-btn {
-    position: absolute;
-    right: 10px;
-    display: flex;
-    align-items: center;
-
-    button {
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      margin: 0 5px;
+    .favicon {
+      width: 35px;
+      overflow: hidden;
 
       img {
-        width: 20px;
-        filter: opacity(0.7);
-        transition: all .5s;
+        width: 100%;
+        height: auto;
       }
+    }
 
-      #remove-btn {
-        width: 25px;
-        margin-bottom: 1px;
+    .operation-btn {
+      position: absolute;
+      right: 10px;
+      display: flex;
+      align-items: center;
+
+      button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        margin: 0 5px;
+
+        img {
+          width: 20px;
+          filter: opacity(0.7);
+          transition: all .5s;
+        }
+
+        #remove-btn {
+          width: 25px;
+          margin-bottom: 1px;
+        }
       }
     }
   }
