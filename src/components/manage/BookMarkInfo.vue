@@ -10,10 +10,16 @@
         >
       </div>
       <div class="content">
-        <h1>
+        <h1 v-show="!show">
           <a :href="searchResultObj.href">{{ searchResultObj.title }}</a>
         </h1>
-        <p>{{ searchResultObj.href }}</p>
+        <input v-show="show" class="titleInput" type="text"
+               ref="titleInput"
+               v-model="titleInputValue"
+        >
+        <p v-show="!show">{{ searchResultObj.desc }}</p>
+        <input v-show="show" class="descInput" type="text"
+               v-model="descInputValue">
         <div class="tag-box-inner">
           <div class="tag" v-for="(tag,index) in searchResultObj.tags" :key="index + '-only'">{{ tag }}</div>
         </div>
@@ -40,7 +46,7 @@
 
       <v-btn
           icon
-          @click="show = !show"
+          @click="show = !show; getTitleFocus(); updateInfo()"
       >
         <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
       </v-btn>
@@ -106,6 +112,10 @@ export default {
       fuseJsResultArr: [],
       // 图片加载有误显示的图片
       errorImg: 'this.src="' + require('@/assets/error-3.svg') + '"',
+      // 标题输入框的值
+      titleInputValue: this.searchResultObj.title,
+      // 链接输入框的值
+      descInputValue: this.searchResultObj.desc,
     }
   },
   methods: {
@@ -133,6 +143,21 @@ export default {
      */
     changeIcon() {
       console.log()
+    },
+    /**
+     * @description 用于使当前的 title 聚焦（提醒用户此时可输入修改 title）
+     */
+    getTitleFocus() {
+      this.$nextTick(() => {
+        this.$refs.titleInput.focus();
+      });
+    },
+    /**
+     * @description 用于更新当前 title 的值
+     */
+    updateInfo() {
+      this.searchResultObj.title = this.titleInputValue;
+      this.searchResultObj.desc = this.descInputValue;
     }
   },
   computed: {}
@@ -191,10 +216,19 @@ export default {
       width: 75%;
       margin-left: 10px;
 
-      h1 {
+      h1, .titleInput {
         font-size: 25px;
         transition: all .5s;
+      }
 
+      .titleInput {
+        margin-bottom: 11.5px;
+        width: 100%;
+        border-bottom: 1px solid gray;
+        outline: medium;
+      }
+
+      h1 {
         a {
           word-wrap: anywhere;
           overflow: hidden;
@@ -205,8 +239,16 @@ export default {
         }
       }
 
-      p {
+      p, .descInput {
         font-size: 16px;
+      }
+
+      .descInput {
+        display: block;
+        margin-bottom: 15px;
+        width: 100%;
+        border-bottom: 1px solid gray;
+        outline: medium;
       }
 
       .tag-box-inner {

@@ -3,6 +3,7 @@ export let searchResult = [
         id: 1,
         title: '百度一下，你就知道',
         href: 'https://www.baidu.com',
+        desc: '百度百度百度百度百度百度',
         icon: 'https://www.baidu.com/favicon.testerror',
         tags: [
             'chrome', 'dev', 'html', 'css', 'js', 'baidu'
@@ -12,6 +13,7 @@ export let searchResult = [
         id: 2,
         title: 'Google',
         href: 'https://www.google.com',
+        desc: 'gooooooooooooogle',
         icon: 'https://www.google.com/favicon.ico',
         tags: [
             'chrome', 'dev', 'html', 'css', 'google', 'js'
@@ -21,6 +23,7 @@ export let searchResult = [
         id: 3,
         title: 'Github,Github,Github,Github,Github',
         href: 'https://github.com',
+        desc: 'GithubGithubGithubGithub',
         icon: 'https://github.com/favicon.ico',
         tags: [
             'chrome', 'dev', 'html', 'css', 'github', 'js'
@@ -30,6 +33,7 @@ export let searchResult = [
         id: 4,
         title: '存储 API - Google Chrome 应用开发文档',
         href: 'https://crxdoc-zh.appspot.com/apps/app_storage',
+        desc: 'Google Chrome 应用开发文档',
         icon: 'https://crxdoc-zh.appspot.com/favicon.ico',
         tags: [
             'chrome', 'dev', 'html', 'css', 'api', 'js'
@@ -39,6 +43,7 @@ export let searchResult = [
         id: 5,
         title: '掘金 - 代码不止，掘金不停',
         href: 'https://juejin.cn',
+        desc: '代码不止，掘金不停',
         icon: 'https://juejin.cn/favicon.ico',
         tags: [
             'chrome', 'dev', 'html', 'css', 'juejin', 'js'
@@ -48,6 +53,7 @@ export let searchResult = [
         id: 6,
         title: 'OSCHINA - 中文开源技术交流社区',
         href: 'https://www.oschina.net',
+        desc: '中文开源技术交流社区',
         icon: 'https://www.oschina.net/favicon.ico',
         tags: [
             'chrome', 'dev', 'html', 'css', 'oschina', 'js'
